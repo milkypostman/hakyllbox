@@ -1,0 +1,119 @@
+/*
+ * main css file for milkbox.net
+ *
+ * simple
+ */
+
+a {
+    color: darkgreen;
+}
+
+a:hover {
+	text-decoration: none;
+    color: darkgreen;
+}
+
+body {
+    background: #fff;
+    margin: 0px;
+    padding: 0px;
+}
+
+#icons {
+    padding: 5px;
+    margin-left: -1em;
+}
+
+#icons:after {
+    clear: both;
+}
+
+.rssicon {
+    width: 20px;
+}
+
+#header {
+    text-align: center;
+}
+#header a, .title a {
+    text-decoration: none;
+}
+
+#header h2, #header a {
+    font-size: 30pt;
+    margin: 0;
+}
+
+
+.subtitle {
+    font-style: italic;
+}
+
+
+#header, #content, #menu, #footer {
+    width:600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#menu {
+	background: #eee;
+    width:700px;
+    text-align:center;
+    margin-bottom: 2em;
+}
+
+.thought {
+    margin-bottom: 2em;
+}
+
+.center {
+    text-align: center;
+}
+
+
+#menu a {
+    text-decoration: none;
+    color: #555;
+}
+
+ul.inlinelist {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul.inlinelist,  ul.inlinelist li {
+    display: inline;
+    padding: 0px 10px;
+    margin: 0;
+    list-style: none;
+}
+
+.title {
+    text-align: left;
+    font-weight: bold;
+    font-size: large;
+}
+
+.title .subtitle {
+    font-style: normal;
+    font-weight: normal;
+    font-size: small;
+}
+
+
+.fleft {
+    float: left
+}
+
+.fright {
+    float: right
+}
+
+div.fleft, div.fright {
+    display: inline;
+}
+
+#footer {
+    padding: 10px
+}

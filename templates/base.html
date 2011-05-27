@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>$title$ : milkbox</title>
+    <link href="/css/mb.css" rel="stylesheet" type="text/css">
+    <link rel="openid2.provider" href="https://www.google.com/accounts/o8/ud?source=profiles" >
+    <link rel="openid2.local_id" href="http://www.google.com/profiles/dcurtis" >
+  </head>
+  <body>
+    <div id="icons" class="fright">
+      <a title="Contact" href="mailto:contact[at]milkbox[dot]net"><img class="rssicon" src="/imgs/contact.png" /></a>
+      <a title="Twitter" href="http://twitter.com/milkypostman"><img class="rssicon" src="/imgs/twitter.png" /></a>
+      <a title="RSS Feed" href="{% url rss %}"><img class="rssicon" src="{{ MEDIA_URL }}img/rss.png" /></a>
+    </div>
+    <div style="clear:both;"></div>
+    <div id="header">
+      <a href="/"><h2>milkbox</h2></a>
+    </div>
+    <div id="content">
+      $body$
+    </div>
+    <div id="footer">
+    </div>
+  </body>
+</html>
+
