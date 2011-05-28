@@ -32,7 +32,7 @@ main = hakyll $ do
   --     >>> relativizeUrlsCompiler
 
   match "brain/*.md" $ do
-    route $ composeRoutes cleanDate cleanURL
+    route $ composeRoutes (composeRoutes cleanDate cleanURL) setRoot
     compile $ pageCompiler
       >>> applyTemplateCompiler "templates/base.html"
       >>> relativizeUrlsCompiler
@@ -49,6 +49,13 @@ main = hakyll $ do
     >>> applyTemplateCompiler "templates/thoughts.html"
     >>> applyTemplateCompiler "templates/base.html"
     >>> relativizeUrlsCompiler
+
+
+setRoot :: Routes
+setRoot = customRoute stripTopDir
+
+stripTopDir :: Identifier -> FilePath
+stripTopDir = joinPath . tail . splitPath . toFilePath
 
 cleanURL :: Routes
 cleanURL = customRoute fileToDirectory

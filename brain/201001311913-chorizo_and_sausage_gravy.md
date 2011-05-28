@@ -6,8 +6,10 @@ created: 2011-02-02 17:49:46
 ---
 This may be the greatest biscuits and gravy gravy recipe ever. Screw it... I WILL MAKE THIS CLAIM!
 
-<strong><em>This is the greatest biscuits and gravy gravy recipe ever... until i make it further better.</em></strong>
-<h3><strong><em><a href="http://milkbox.net/wp-content/uploads/2010/01/IMG_0546.jpg"><img class="aligncenter size-medium wp-image-140" title="Chorizo and Sausage Biscuits and Gravy" src="http://milkbox.net/wp-content/uploads/2010/01/IMG_0546-225x300.jpg" alt="awesome." width="225" height="300" /></a></em></strong>Ingredients</h3>
+<strong><em>This is the greatest biscuits and gravy gravy recipe
+ever... until i make it further better.</em></strong>
+<a href="/imgs/IMG_0546.jpg"><img src="/imgs/IMG_0546.jpg" alt="awesome." width="225" height="300" /></a>
+<h3>Ingredients</h3>
 <ul>
 \t<li>1lb sausage</li>
 \t<li>1 stick of chorizo</li>

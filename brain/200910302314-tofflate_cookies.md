@@ -32,6 +32,12 @@ I got the hankering to make some cookies and now I'm nauseous from cookie dough.
 <li>Put mounds of cookie dough on the parchment paper.</li>
 <li>375 degrees for about 10-12 minutes.</li>
 </ol>
-This made a ton of cookies and I'm pretty sure all my sampling of cookie dough reduced the amount of cookies I made by at least 2-3.  The original recipe says 12-14 minutes and I think it was a little too long.  My first batch charred a bit but also my oven sucks.  It's so small I cannot fit a normal sized cookie sheet in so I had to use a bunch of small ones.  The parchment paper is a gift.  Less cleanup and nothing sticks to it.  So awesome.
+This made a ton of cookies and I'm pretty sure all my sampling of
+cookie dough reduced the amount of cookies I madeby at least 2-3.  The
+original recipe says 12-14 minutes and I think it was a little too
+long.  My first batch charred a bit but also my oven sucks.  It's so
+small I cannot fit a normal sized cookie sheet in so I had to use a
+bunch of small ones.  The parchment paper is a gift.  Less cleanup and
+nothing sticks to it.  So awesome.
 
 

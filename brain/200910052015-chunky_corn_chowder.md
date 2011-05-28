@@ -45,5 +45,5 @@ Whatever.  I'll eat it.
 
 And....  Done
 
-<p><a href="http://www.milkbox.net/wp-content/uploads/2009/10/p_2048_1536_44F762A8-DD83-4499-93AB-E9A4A8938341.jpeg"><img class="alignleft size-full wp-image-364" src="http://www.milkbox.net/wp-content/uploads/2009/10/p_2048_1536_44F762A8-DD83-4499-93AB-E9A4A8938341.jpeg" alt="" width="225" height="300" /></a></p>
+<p><a href="/imgs/p_2048_1536_44F762A8-DD83-4499-93AB-E9A4A8938341.jpg"><img src="/imgs/p_2048_1536_44F762A8-DD83-4499-93AB-E9A4A8938341.jpg" alt="" width="225" height="300" /></a></p>
 
