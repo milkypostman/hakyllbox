@@ -25,28 +25,19 @@ main = hakyll $ do
 
   match "templates/*" $ compile templateCompiler
 
-  -- match "index.md" $ do
-  --   route $ setExtension "html"
-  --   compile $ pageCompiler
-  --     >>> applyTemplateCompiler "templates/base.html"
-  --     >>> relativizeUrlsCompiler
-
   match "brain/*.md" $ do
     route $ composeRoutes (composeRoutes cleanDate cleanURL) setRoot
     compile $ pageCompiler
+      >>> arr (copyBodyToField "content")
+      >>> applyTemplateCompiler "templates/thought.html"
       >>> applyTemplateCompiler "templates/base.html"
       >>> relativizeUrlsCompiler
-
-  -- group "raw" $ do
-  --   match "brain/*.md" $ do
-  --     route idRoute
-  --     compile $ readPageCompiler
 
   match "index.html" $ route idRoute
   create "index.html" $ constA mempty
     >>> arr (setField "title" "brains")
     >>> requireAllA "brain/*.md" postList
-    >>> applyTemplateCompiler "templates/thoughts.html"
+    >>> arr (copyBodyFromField "thoughts")
     >>> applyTemplateCompiler "templates/base.html"
     >>> relativizeUrlsCompiler
 
@@ -77,7 +68,7 @@ stripIndexLink :: Page a -> Page a
 stripIndexLink = changeField "url" dropFileName
 
 postList :: Compiler (Page String, [Page String]) (Page String)
-postList = buildList "thoughts" "templates/thought.html"
+postList = buildList "thoughts" "templates/thought_item.html"
 
 sortByCreatedField :: [Page a] -> [Page a]
 sortByCreatedField = sortBy $ comparing $ getField "created"

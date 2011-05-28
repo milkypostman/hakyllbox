@@ -14,6 +14,9 @@ a:hover {
 }
 
 body {
+    font-family: "HelveticaNeue", Helvetica, Verdana, "Bitstream Vera Sans", sans-serif;
+   	line-height: 1.5em;
+    font-size: 14px;
     background: #fff;
     margin: 0px;
     padding: 0px;
@@ -32,21 +35,34 @@ body {
     width: 20px;
 }
 
-.ilist {
+.thought-item {
+	background: #eee;
     text-align: center;
     margin-bottom: .5em;
 }
 
+.thought-item a:hover {
+    background: darkgreen;
+    color: #eee;
+    }
+
+.thought-item a {
+    display: block;
+    text-decoration: none;
+    }
+
 #header {
+    font-family: "HelveticaNeue", Helvetica, Verdana, "Bitstream Vera Sans", sans-serif;
     text-align: center;
-    margin-bottom: 2em;
+    margin-top: 1em;
+    margin-bottom: 4em;
 }
 #header a, .title a {
     text-decoration: none;
 }
 
-#header h2, #header a {
-    font-size: 30pt;
+#header h1, #header a {
+    font-size: 60px;
     margin: 0;
 }
 
@@ -55,9 +71,12 @@ body {
     font-style: italic;
 }
 
+.post-content {
+    /* font-family: "Georgia", sans-serif; */
+}
 
 #header, #content, #menu, #footer {
-    width:600px;
+    width:500px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -98,13 +117,13 @@ ul.inlinelist,  ul.inlinelist li {
 .title {
     text-align: left;
     font-weight: bold;
-    font-size: large;
+    font-size: 18px;
 }
 
 .title .subtitle {
     font-style: normal;
     font-weight: normal;
-    font-size: small;
+    font-size: 13px;
 }
 
 
