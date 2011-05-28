@@ -24,11 +24,11 @@ body {
 
 #icons {
     padding: 5px;
-    margin-left: -1em;
+    /* margin-left: -1em; */
 }
 
-#icons:after {
-    clear: both;
+#icons-clear {
+    /* clear: both; */
 }
 
 .rssicon {
@@ -42,7 +42,7 @@ body {
 }
 
 .thought-item a:hover {
-    background: darkgreen;
+    background: darkgray;
     color: #eee;
     }
 
@@ -54,14 +54,15 @@ body {
 #header {
     font-family: "HelveticaNeue", Helvetica, Verdana, "Bitstream Vera Sans", sans-serif;
     text-align: center;
-    margin-top: 1em;
-    margin-bottom: 4em;
+    /* margin-top: 1em; */
+    margin-bottom: 3em;
 }
 #header a, .title a {
     text-decoration: none;
 }
 
 #header h1, #header a {
+    line-height: 70px;
     font-size: 60px;
     margin: 0;
 }
