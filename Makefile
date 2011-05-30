@@ -1,4 +1,4 @@
-all: preview
+all: rebuild
 
 preview: rebuild
 	./hakyllbox preview

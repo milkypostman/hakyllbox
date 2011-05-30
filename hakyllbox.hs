@@ -1,13 +1,20 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Char (isSpace)
 import GHC.Exts (IsString, fromString)
-import Data.Maybe (listToMaybe)
+
+import Data.List (intercalate)
+import Data.Maybe (listToMaybe, fromJust)
 import Control.Arrow ((>>>), arr)
 import Control.Monad (forM_)
+import Data.Char (toLower)
+import Data.Maybe (fromMaybe)
 import Data.Monoid (mempty, mconcat)
 import Data.Ord (comparing)
 import Data.List (sortBy)
 import System.FilePath
+import Data.Time.Format (parseTime, formatTime)
+import Data.Time.Clock (UTCTime)
+import System.Locale (TimeLocale, defaultTimeLocale)
 
 import Text.Regex.PCRE ((=~~), (=~))
 
@@ -26,8 +33,11 @@ main = hakyll $ do
   match "templates/*" $ compile templateCompiler
 
   match "brain/*.md" $ do
-    route $ composeRoutes (composeRoutes cleanDate cleanURL) setRoot
+    route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
     compile $ pageCompiler
+      >>> arr addPosted
+      >>> arr (changeField "title" $ map toLower)
+      >>> arr (copyBodyToField "description")
       >>> arr (copyBodyToField "content")
       >>> applyTemplateCompiler "templates/thought.html"
       >>> applyTemplateCompiler "templates/base.html"
@@ -40,6 +50,19 @@ main = hakyll $ do
     >>> arr (copyBodyFromField "thoughts")
     >>> applyTemplateCompiler "templates/base.html"
     >>> relativizeUrlsCompiler
+
+  match "rss/index.html" $ route idRoute
+  create "rss/index.html" $ requireAll_ "brain/*.md"
+    >>> renderRss feedConfiguration
+
+
+feedConfiguration :: FeedConfiguration
+feedConfiguration = FeedConfiguration
+    { feedTitle       = "milkbox.net"
+    , feedDescription = "pointless yammering"
+    , feedAuthorName  = "milkypostman"
+    , feedRoot        = "http://milkbox.net"
+    }
 
 
 setRoot :: Routes
@@ -58,7 +81,23 @@ cleanDate :: Routes
 cleanDate = customRoute removeDatePrefix
 
 removeDatePrefix :: Identifier -> FilePath
-removeDatePrefix = concatHeadTail . flip (=~) ("\\d{12}-" :: String) . toFilePath
+-- removeDatePrefix = concatHeadTail . flip (=~) ("\\d{12}-" :: String) . toFilePath
+removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
+                         where file = toFilePath ident
+
+addPosted :: Page a -> Page a
+addPosted p = flip (setField "posted") p .
+              reformatTime "%Y-%m-%d-%H%M" "%Y.%m.%d;%H:%M" $
+              intercalate "-" $ take 4 $ splitAll "-" $ takeFileName $ getField "path" p
+
+reformatTime :: String -> String -> String -> String
+reformatTime old new value = case parsed of
+  Just parsed -> formatTime defaultTimeLocale new parsed
+  Nothing     -> value
+  where
+    parsed = parseTime defaultTimeLocale old value :: Maybe UTCTime
+
+
 -- removeDatePrefix = concatHeadTail . flip (=~) ("\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}-" :: String) . toFilePath
 
 concatHeadTail :: (String,String,String) -> String
