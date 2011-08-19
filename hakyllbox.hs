@@ -36,6 +36,7 @@ main = hakyll $ do
     route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
     compile $ pageCompiler
       >>> arr addPosted
+      >>> arr (changeField "url" $ dropFileName)
       >>> arr (changeField "title" $ map toLower)
       >>> arr (copyBodyToField "description")
       >>> arr (copyBodyToField "content")
@@ -81,10 +82,8 @@ cleanDate :: Routes
 cleanDate = customRoute removeDatePrefix
 
 removeDatePrefix :: Identifier -> FilePath
--- removeDatePrefix = concatHeadTail . flip (=~) ("\\d{12}-" :: String) . toFilePath
 removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
                          where file = toFilePath ident
-
 addPosted :: Page a -> Page a
 addPosted p = flip (setField "posted") p .
               reformatTime "%Y-%m-%d-%H%M" "%Y.%m.%d;%H:%M" $
@@ -103,8 +102,8 @@ reformatTime old new value = case parsed of
 concatHeadTail :: (String,String,String) -> String
 concatHeadTail (a,_,c) = combine a c
 
-stripIndexLink :: Page a -> Page a
-stripIndexLink = changeField "url" dropFileName
+-- stripIndexLink :: Page a -> Page a
+-- stripIndexLink = changeField "url" dropFileName
 
 postList :: Compiler (Page String, [Page String]) (Page String)
 postList = buildList "thoughts" "templates/thought_item.html"
@@ -115,7 +114,6 @@ sortByCreatedField = sortBy $ comparing $ getField "created"
 buildList :: String -> Identifier -> Compiler (Page String, [Page String]) (Page String)
 buildList field template = setFieldA field $
     arr (reverse . sortByBaseName)
-    >>> arr (map stripIndexLink)
     >>> require template (\p t -> map (applyTemplate t) p)
     >>> arr mconcat
     >>> arr pageBody
