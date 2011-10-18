@@ -32,7 +32,19 @@ main = hakyll $ do
 
   match "templates/*" $ compile templateCompiler
 
-  match "brain/*.md" $ do
+  match "projects/emacs/*.md" $ do
+    route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
+    compile $ pageCompiler
+      >>> arr addPosted
+      >>> arr (changeField "url" $ dropFileName)
+      >>> arr (changeField "title" $ map toLower)
+      >>> arr (copyBodyToField "description")
+      >>> arr (copyBodyToField "content")
+      >>> applyTemplateCompiler "templates/thought.html"
+      >>> applyTemplateCompiler "templates/base.html"
+      >>> relativizeUrlsCompiler
+
+  match "projects/cooking/*.md" $ do
     route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
     compile $ pageCompiler
       >>> arr addPosted
