@@ -44,6 +44,18 @@ main = hakyll $ do
       >>> applyTemplateCompiler "templates/base.html"
       >>> relativizeUrlsCompiler
 
+  match "projects/nix/*.md" $ do
+    route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
+    compile $ pageCompiler
+      >>> arr addPosted
+      >>> arr (changeField "url" $ dropFileName)
+      >>> arr (changeField "title" $ map toLower)
+      >>> arr (copyBodyToField "description")
+      >>> arr (copyBodyToField "content")
+      >>> applyTemplateCompiler "templates/thought.html"
+      >>> applyTemplateCompiler "templates/base.html"
+      >>> relativizeUrlsCompiler
+
   match "projects/cooking/*.md" $ do
     route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
     compile $ pageCompiler
@@ -59,10 +71,13 @@ main = hakyll $ do
   match "index.html" $ route idRoute
   create "index.html" $ constA mempty
     >>> arr (setField "title" "brains")
-    >>> requireAllA "brain/*.md" postList
-    >>> arr (copyBodyFromField "thoughts")
+    >>> requireAllA "projects/emacs/*.md" $ postList "emacs"
+    >>> requireAllA "projects/nix/*.md" $ postList "nix"
+    >>> requireAllA "projects/cooking/*.md" $ postList "cooking"
+    >>> applyTemplateCompiler "templates/front.hml"
     >>> applyTemplateCompiler "templates/base.html"
     >>> relativizeUrlsCompiler
+    -- >>> arr (copyBodyFromField "thoughts")
 
   match "rss/index.html" $ route idRoute
   create "rss/index.html" $ requireAll_ "brain/*.md"
@@ -117,8 +132,8 @@ concatHeadTail (a,_,c) = combine a c
 -- stripIndexLink :: Page a -> Page a
 -- stripIndexLink = changeField "url" dropFileName
 
-postList :: Compiler (Page String, [Page String]) (Page String)
-postList = buildList "thoughts" "templates/thought_item.html"
+postList :: String -> Compiler (Page String, [Page String]) (Page String)
+postList var = buildList var "templates/thought_item.html"
 
 sortByCreatedField :: [Page a] -> [Page a]
 sortByCreatedField = sortBy $ comparing $ getField "created"
