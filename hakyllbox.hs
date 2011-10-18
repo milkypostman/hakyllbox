@@ -32,56 +32,29 @@ main = hakyll $ do
 
   match "templates/*" $ compile templateCompiler
 
-  match "projects/emacs/*.md" $ do
-    route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
+  match "projects/(cooking|emacs|nix)/*.md" $ do
+    route $ idRoute
     compile $ pageCompiler
       >>> arr addPosted
       >>> arr (changeField "url" $ dropFileName)
       >>> arr (changeField "title" $ map toLower)
-      >>> arr (copyBodyToField "description")
-      >>> arr (copyBodyToField "content")
-      >>> applyTemplateCompiler "templates/thought.html"
       >>> applyTemplateCompiler "templates/base.html"
       >>> relativizeUrlsCompiler
 
-  match "projects/nix/*.md" $ do
-    route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
-    compile $ pageCompiler
-      >>> arr addPosted
-      >>> arr (changeField "url" $ dropFileName)
-      >>> arr (changeField "title" $ map toLower)
-      >>> arr (copyBodyToField "description")
-      >>> arr (copyBodyToField "content")
-      >>> applyTemplateCompiler "templates/thought.html"
-      >>> applyTemplateCompiler "templates/base.html"
-      >>> relativizeUrlsCompiler
+  -- match "index.html" $ route idRoute
+  -- create "index.html" $ constA mempty
+  --   >>> arr (setField "title" "brains")
+  --   >>> requireAllA "projects/emacs/*.md" $ postList "emacs"
+  --   >>> requireAllA "projects/nix/*.md" $ postList "nix"
+  --   >>> requireAllA "projects/cooking/*.md" $ postList "cooking"
+  --   >>> applyTemplateCompiler "templates/front.hml"
+  --   >>> applyTemplateCompiler "templates/base.html"
+  --   >>> relativizeUrlsCompiler
+  --   -- >>> arr (copyBodyFromField "thoughts")
 
-  match "projects/cooking/*.md" $ do
-    route $ composeRoutes setRoot $ composeRoutes cleanDate cleanURL
-    compile $ pageCompiler
-      >>> arr addPosted
-      >>> arr (changeField "url" $ dropFileName)
-      >>> arr (changeField "title" $ map toLower)
-      >>> arr (copyBodyToField "description")
-      >>> arr (copyBodyToField "content")
-      >>> applyTemplateCompiler "templates/thought.html"
-      >>> applyTemplateCompiler "templates/base.html"
-      >>> relativizeUrlsCompiler
-
-  match "index.html" $ route idRoute
-  create "index.html" $ constA mempty
-    >>> arr (setField "title" "brains")
-    >>> requireAllA "projects/emacs/*.md" $ postList "emacs"
-    >>> requireAllA "projects/nix/*.md" $ postList "nix"
-    >>> requireAllA "projects/cooking/*.md" $ postList "cooking"
-    >>> applyTemplateCompiler "templates/front.hml"
-    >>> applyTemplateCompiler "templates/base.html"
-    >>> relativizeUrlsCompiler
-    -- >>> arr (copyBodyFromField "thoughts")
-
-  match "rss/index.html" $ route idRoute
-  create "rss/index.html" $ requireAll_ "brain/*.md"
-    >>> renderRss feedConfiguration
+  -- match "rss/index.html" $ route idRoute
+  -- create "rss/index.html" $ requireAll_ "brain/*.md"
+  --   >>> renderRss feedConfiguration
 
 
 feedConfiguration :: FeedConfiguration
@@ -93,24 +66,24 @@ feedConfiguration = FeedConfiguration
     }
 
 
-setRoot :: Routes
-setRoot = customRoute stripTopDir
+-- setRoot :: Routes
+-- setRoot = customRoute stripTopDir
 
-stripTopDir :: Identifier -> FilePath
-stripTopDir = joinPath . tail . splitPath . toFilePath
+-- stripTopDir :: Identifier -> FilePath
+-- stripTopDir = joinPath . tail . splitPath . toFilePath
 
-cleanURL :: Routes
-cleanURL = customRoute fileToDirectory
+-- cleanURL :: Routes
+-- cleanURL = customRoute fileToDirectory
 
-fileToDirectory :: Identifier -> FilePath
-fileToDirectory = (flip combine) "index.html" . dropExtension . toFilePath
+-- fileToDirectory :: Identifier -> FilePath
+-- fileToDirectory = (flip combine) "index.html" . dropExtension . toFilePath
 
-cleanDate :: Routes
-cleanDate = customRoute removeDatePrefix
+-- cleanDate :: Routes
+-- cleanDate = customRoute removeDatePrefix
 
-removeDatePrefix :: Identifier -> FilePath
-removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
-                         where file = toFilePath ident
+-- removeDatePrefix :: Identifier -> FilePath
+-- removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
+--                          where file = toFilePath ident
 addPosted :: Page a -> Page a
 addPosted p = flip (setField "posted") p .
               reformatTime "%Y-%m-%d-%H%M" "%Y.%m.%d;%H:%M" $
@@ -124,23 +97,23 @@ reformatTime old new value = case parsed of
     parsed = parseTime defaultTimeLocale old value :: Maybe UTCTime
 
 
--- removeDatePrefix = concatHeadTail . flip (=~) ("\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}-" :: String) . toFilePath
+-- -- removeDatePrefix = concatHeadTail . flip (=~) ("\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}-" :: String) . toFilePath
 
-concatHeadTail :: (String,String,String) -> String
-concatHeadTail (a,_,c) = combine a c
+-- concatHeadTail :: (String,String,String) -> String
+-- concatHeadTail (a,_,c) = combine a c
 
--- stripIndexLink :: Page a -> Page a
--- stripIndexLink = changeField "url" dropFileName
+-- -- stripIndexLink :: Page a -> Page a
+-- -- stripIndexLink = changeField "url" dropFileName
 
-postList :: String -> Compiler (Page String, [Page String]) (Page String)
-postList var = buildList var "templates/thought_item.html"
+-- postList :: String -> Compiler (Page String, [Page String]) (Page String)
+-- postList var = buildList var "templates/thought_item.html"
 
-sortByCreatedField :: [Page a] -> [Page a]
-sortByCreatedField = sortBy $ comparing $ getField "created"
+-- sortByCreatedField :: [Page a] -> [Page a]
+-- sortByCreatedField = sortBy $ comparing $ getField "created"
 
-buildList :: String -> Identifier -> Compiler (Page String, [Page String]) (Page String)
-buildList field template = setFieldA field $
-    arr (reverse . sortByBaseName)
-    >>> require template (\p t -> map (applyTemplate t) p)
-    >>> arr mconcat
-    >>> arr pageBody
+-- buildList :: String -> Identifier -> Compiler (Page String, [Page String]) (Page String)
+-- buildList field template = setFieldA field $
+--     arr (reverse . sortByBaseName)
+--     >>> require template (\p t -> map (applyTemplate t) p)
+--     >>> arr mconcat
+--     >>> arr pageBody
