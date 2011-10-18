@@ -36,7 +36,7 @@ main = hakyll $ do
     route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
       >>> arr (copyBodyToField "content")
-      >>> arr addPosted
+      >>> arr (renderDateField "date" "%Y-%m-%d" "Date unknown")
       >>> arr (changeField "url" $ dropFileName)
       >>> arr (changeField "title" $ map toLower)
       >>> applyTemplateCompiler "_layouts/base.html"
@@ -78,8 +78,12 @@ fileToDirectory :: Identifier () -> FilePath
 fileToDirectory = (flip combine) "index.html" . dropExtension . toFilePath
 
 cleanDate :: Routes
-cleanDate = customRoute removeDatePrefix
+cleanDate = customRoute removeShortDatePrefix
 
+removeShortDatePrefix :: Identifier () -> FilePath
+removeShortDatePrefix ident = replaceFileName file (drop 11 $ takeFileName file)
+  where file = toFilePath ident
+                               
 removeDatePrefix :: Identifier () -> FilePath
 removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
                          where file = toFilePath ident
