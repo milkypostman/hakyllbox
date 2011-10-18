@@ -47,13 +47,13 @@ main = hakyll $ do
     >>> arr (setField "title" "net")
     >>> setFieldPageList (take 1 . recentFirst) "_layouts/item.html" "postfirst" "_posts/*.md"
     >>> setFieldPageList (tail . recentFirst) "_layouts/itemlink.html" "posts" "_posts/*.md"
-    -- >>> requireAllA "_posts/*.md" (buildList "posts")
     >>> applyTemplateCompiler "_layouts/front.html"
     >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
 
-  match "rss/index.html" $ route idRoute
-  create "rss/index.html" $ requireAll_ "_posts/*.md"
+  match "feed/index.html" $ route idRoute
+  create "feed/index.html" $ requireAll_ "_posts/*.md"
+    >>> arr (map $ copyField "content" "description")
     >>> renderRss feedConfiguration
 
 
@@ -78,32 +78,9 @@ fileToDirectory :: Identifier () -> FilePath
 fileToDirectory = (flip combine) "index.html" . dropExtension . toFilePath
 
 cleanDate :: Routes
-cleanDate = customRoute removeShortDatePrefix
+cleanDate = customRoute removeDatePrefix
 
-removeShortDatePrefix :: Identifier () -> FilePath
-removeShortDatePrefix ident = replaceFileName file (drop 11 $ takeFileName file)
+removeDatePrefix :: Identifier () -> FilePath
+removeDatePrefix ident = replaceFileName file (drop 11 $ takeFileName file)
   where file = toFilePath ident
                                
-removeDatePrefix :: Identifier () -> FilePath
-removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
-                         where file = toFilePath ident
-                               
-addPosted :: Page a -> Page a
-addPosted p = flip (setField "posted") p .
-              reformatTime "%Y-%m-%d-%H%M" "%Y.%m.%d;%H:%M" $
-              intercalate "-" $ take 4 $ splitAll "-" $ takeFileName $ getField "path" p
-
-reformatTime :: String -> String -> String -> String
-reformatTime old new value = case parsed of
-  Just parsed -> formatTime defaultTimeLocale new parsed
-  Nothing     -> value
-  where
-    parsed = parseTime defaultTimeLocale old value :: Maybe UTCTime
-
-
-buildList :: String -> Compiler (Page String, [Page String]) (Page String)
-buildList field = setFieldA field $
-    arr (reverse . chronological)
-    >>> require "_layouts/itemlink.html" (\p t -> map (applyTemplate t) p)
-    >>> arr mconcat
-    >>> arr pageBody
