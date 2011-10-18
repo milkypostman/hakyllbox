@@ -35,19 +35,17 @@ body {
     width: 20px;
 }
 
-.thought-item {
-	background: #eee;
-    text-align: center;
+.itemlink {
+    text-align: left;
     margin-bottom: .5em;
 }
 
-.thought-item a:hover {
+.itemlink a:hover {
     background: darkgray;
     color: #eee;
     }
 
-.thought-item a {
-    display: block;
+.itemlink a {
     text-decoration: none;
     }
 
@@ -72,24 +70,20 @@ body {
     font-style: italic;
 }
 
-.post-content {
+.content {
     /* font-family: "Georgia", sans-serif; */
 }
 
-#header, #content, #menu, #footer {
+#header, #body, #menu, #footer {
     width:500px;
     margin-left: auto;
     margin-right: auto;
 }
 
 #menu {
-	background: #eee;
+    background: #eee;
     width:700px;
     text-align:center;
-    margin-bottom: 2em;
-}
-
-.thought {
     margin-bottom: 2em;
 }
 

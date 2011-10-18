@@ -30,28 +30,28 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
 
-  match "templates/*" $ compile templateCompiler
+  match "_layouts/*" $ compile templateCompiler
 
-  match "projects/*/*.md" $ do
-    route $ setRoot `composeRoutes` cleanURL
+  match "_posts/*/*.md" $ do
+    route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
       >>> arr addPosted
       >>> arr (changeField "url" $ dropFileName)
       >>> arr (changeField "title" $ map toLower)
-      >>> applyTemplateCompiler "templates/base.html"
+      >>> applyTemplateCompiler "_layouts/base.html"
       >>> relativizeUrlsCompiler
 
   match "index.html" $ route idRoute
   create "index.html" $ constA mempty
-    >>> arr (setField "title" "brains")
-    >>> requireAllA "projects/nix/*.md" (buildList "nix")
-    >>> requireAllA "projects/cooking/*.md" (buildList "cooking")
-    >>> applyTemplateCompiler "templates/front.html"
-    >>> applyTemplateCompiler "templates/base.html"
+    >>> arr (setField "title" "net")
+    >>> requireAllA "_posts/nix/*.md" (buildList "nix")
+    >>> requireAllA "_posts/cooking/*.md" (buildList "cooking")
+    >>> applyTemplateCompiler "_layouts/front.html"
+    >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
 
   match "rss/index.html" $ route idRoute
-  create "rss/index.html" $ requireAll_ "brain/*.md"
+  create "rss/index.html" $ requireAll_ "posts/**/*.md"
     >>> renderRss feedConfiguration
 
 
@@ -75,6 +75,13 @@ cleanURL = customRoute fileToDirectory
 fileToDirectory :: Identifier () -> FilePath
 fileToDirectory = (flip combine) "index.html" . dropExtension . toFilePath
 
+cleanDate :: Routes
+cleanDate = customRoute removeDatePrefix
+
+removeDatePrefix :: Identifier () -> FilePath
+removeDatePrefix ident = replaceFileName file (drop 16 $ takeFileName file)
+                         where file = toFilePath ident
+                               
 addPosted :: Page a -> Page a
 addPosted p = flip (setField "posted") p .
               reformatTime "%Y-%m-%d-%H%M" "%Y.%m.%d;%H:%M" $
@@ -91,6 +98,6 @@ reformatTime old new value = case parsed of
 buildList :: String -> Compiler (Page String, [Page String]) (Page String)
 buildList field = setFieldA field $
     arr (reverse . chronological)
-    >>> require "templates/itemlink.html" (\p t -> map (applyTemplate t) p)
+    >>> require "_layouts/itemlink.html" (\p t -> map (applyTemplate t) p)
     >>> arr mconcat
     >>> arr pageBody

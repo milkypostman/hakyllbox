@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ghc --make hakyllbox
+./hakyllbox rebuild
+rsync -avz --delete _site/ milkbox.net:webapps/hakyllbox
