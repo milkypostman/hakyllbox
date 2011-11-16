@@ -17,10 +17,18 @@ body {
     font-family: "HelveticaNeue", Helvetica, Verdana, "Bitstream Vera Sans", sans-serif;
    	line-height: 1.5em;
     font-size: 14px;
-    background: #fff;
+    background: #ddd;
     margin: 0px;
     padding: 0px;
 }
+
+#body {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    padding:30px;
+    }
 
 #icons {
     padding: 5px;
@@ -50,7 +58,7 @@ body {
     }
 
 #header {
-    font-family: "HelveticaNeue", Helvetica, Verdana, "Bitstream Vera Sans", sans-serif;
+    /* font-family: "HelveticaNeue", Helvetica, Verdana, "Bitstream Vera Sans", sans-serif; */
     text-align: center;
     /* margin-top: 1em; */
     margin-bottom: 3em;
@@ -74,10 +82,7 @@ body {
     /* font-family: "Georgia", sans-serif; */
 }
 
-#header, #body, #menu, #footer {
-    width:500px;
-    margin-left: auto;
-    margin-right: auto;
+#header, #content, #menu, #footer {
 }
 
 #menu {

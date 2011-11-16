@@ -32,7 +32,17 @@ main = hakyll $ do
 
   match "_layouts/*" $ compile templateCompiler
 
-  match "_posts/*.md" $ do
+  match "_posts/recipes/*.md" $ do
+    route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
+    compile $ pageCompiler
+      >>> arr (copyBodyToField "content")
+      >>> arr (renderDateField "date" "%Y-%m-%d" "Date unknown")
+      >>> arr (changeField "url" $ dropFileName)
+      >>> arr (changeField "title" $ map toLower)
+      >>> applyTemplateCompiler "_layouts/base.html"
+      >>> relativizeUrlsCompiler
+
+  match "_posts/unix/*.md" $ do
     route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
       >>> arr (copyBodyToField "content")
@@ -46,13 +56,14 @@ main = hakyll $ do
   create "index.html" $ constA mempty
     >>> arr (setField "title" "net")
     >>> setFieldPageList (take 1 . recentFirst) "_layouts/item.html" "postfirst" "_posts/*.md"
-    >>> setFieldPageList (tail . recentFirst) "_layouts/itemlink.html" "posts" "_posts/*.md"
+    >>> setFieldPageList (tail . recentFirst) "_layouts/itemlink.html" "recipes" "_posts/recipes/*.md"
+    >>> setFieldPageList (tail . recentFirst) "_layouts/itemlink.html" "unix" "_posts/unix/*.md"
     >>> applyTemplateCompiler "_layouts/front.html"
     >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
 
   match "feed/index.html" $ route idRoute
-  create "feed/index.html" $ requireAll_ "_posts/*.md"
+  create "feed/index.html" $ requireAll_ "_posts/*/*.md"
     >>> arr (map $ copyField "content" "description")
     >>> renderRss feedConfiguration
 
