@@ -11,3 +11,7 @@ rebuild: hakyllbox
 
 hakyllbox: hakyllbox.hs
 	ghc --make hakyllbox
+
+clean:
+	rm -f hakyllbox hakyllbox.hi hakyllbox.o
+

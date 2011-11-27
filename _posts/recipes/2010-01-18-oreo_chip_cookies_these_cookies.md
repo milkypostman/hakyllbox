@@ -1,5 +1,5 @@
 ---
-title: Oreo Chip Cookies: These cookies are bound to blow your mind.
+title: Oreo Chip Cookies
 posted: 2010-01-18 00:10:42
 modified: 2011-02-02 17:32:30
 created: 2011-02-02 17:49:46

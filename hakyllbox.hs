@@ -30,25 +30,22 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
 
+  match "imgs/icons/*" $ do
+    route idRoute
+    compile copyFileCompiler
+
   match "_layouts/*" $ compile templateCompiler
 
-  match "_posts/recipes/*.md" $ do
+  match (predicate (\i -> matches "_posts/*/*.md" i 
+                          -- && not (matches "_posts/drafts/*" i)
+                   )) $ do
     route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
       >>> arr (copyBodyToField "content")
       >>> arr (renderDateField "date" "%Y-%m-%d" "Date unknown")
       >>> arr (changeField "url" $ dropFileName)
-      >>> arr (changeField "title" $ map toLower)
-      >>> applyTemplateCompiler "_layouts/base.html"
-      >>> relativizeUrlsCompiler
-
-  match "_posts/unix/*.md" $ do
-    route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
-    compile $ pageCompiler
-      >>> arr (copyBodyToField "content")
-      >>> arr (renderDateField "date" "%Y-%m-%d" "Date unknown")
-      >>> arr (changeField "url" $ dropFileName)
-      >>> arr (changeField "title" $ map toLower)
+      -- >>> arr (changeField "title" $ map toLower)
+      >>> applyTemplateCompiler "_layouts/item.html"
       >>> applyTemplateCompiler "_layouts/base.html"
       >>> relativizeUrlsCompiler
 
@@ -56,8 +53,9 @@ main = hakyll $ do
   create "index.html" $ constA mempty
     >>> arr (setField "title" "net")
     >>> setFieldPageList (take 1 . recentFirst) "_layouts/item.html" "postfirst" "_posts/*.md"
-    >>> setFieldPageList (tail . recentFirst) "_layouts/itemlink.html" "recipes" "_posts/recipes/*.md"
-    >>> setFieldPageList (tail . recentFirst) "_layouts/itemlink.html" "unix" "_posts/unix/*.md"
+    >>> setFieldPageList (recentFirst) "_layouts/itemlink.html" "recipes" "_posts/recipes/*.md"
+    >>> setFieldPageList (recentFirst) "_layouts/itemlink.html" "unix" "_posts/unix/*.md"
+    >>> setFieldPageList (recentFirst) "_layouts/itemlink.html" "academics" "_posts/academics/*.md"
     >>> applyTemplateCompiler "_layouts/front.html"
     >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
