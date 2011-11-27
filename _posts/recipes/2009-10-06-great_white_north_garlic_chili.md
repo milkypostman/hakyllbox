@@ -19,7 +19,7 @@ Here is the first recipe I have made up on my own...
 \t<li>2 cans chili hot beans</li>
 \t<li>1 can northern white beans (this is what makes the title!)</li>
 </ul>
-<span style="font-size: medium;"><span><strong>Instructions</strong></span></span>
+<h3>Instructions</h3>
 <ol>
 \t<li> Cook the hamburger and chop up the garlic and add it to the hamburger whenever.</li>
 \t<li>In a crock-pot put in the cans of tomatoes and beans. You can drain the tomatoes or not, but don't drain the beans, just dump them in. Save the chili hot beans cans for later.</li>
