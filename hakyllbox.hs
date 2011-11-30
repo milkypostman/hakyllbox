@@ -44,7 +44,6 @@ main = hakyll $ do
       >>> arr (copyBodyToField "content")
       >>> arr (renderDateField "date" "%Y-%m-%d" "Date unknown")
       >>> arr (changeField "url" $ dropFileName)
-      -- >>> arr (changeField "title" $ map toLower)
       >>> applyTemplateCompiler "_layouts/post.html"
       >>> applyTemplateCompiler "_layouts/base.html"
       >>> relativizeUrlsCompiler
@@ -52,12 +51,10 @@ main = hakyll $ do
   match "index.html" $ route idRoute
   create "index.html" $ constA mempty
     >>> arr (setField "title" "net")
-    -- >>> setFieldPageList (take 1 . recentFirst) "_layouts/post.html" "postfirst" "_posts/*.md"
-    >>> requireA "tags" (setFieldA "tags" (renderTagList'))
     >>> setFieldPageList (recentFirst) "_layouts/postitem.html" "recipes" "_posts/recipes/*.md"
     >>> setFieldPageList (recentFirst) "_layouts/postitem.html" "unix" "_posts/unix/*.md"
     >>> setFieldPageList (recentFirst) "_layouts/postitem.html" "academics" "_posts/academics/*.md"
-    >>> applyTemplateCompiler "_layouts/front.html"
+    >>> applyTemplateCompiler "_layouts/index.html"
     >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
 
@@ -66,27 +63,6 @@ main = hakyll $ do
     >>> arr (map $ copyField "content" "description")
     >>> renderRss feedConfiguration
 
-  create "tags" $
-    requireAll "_posts/unix/*.md" (\_ ps -> readTags ps :: Tags String)
-
-  match "tags/*" $ route $ cleanURL
-
-  metaCompile $ require_ "tags"
-    >>> arr tagsMap
-    >>> arr (map (\(t, p) -> (tagIdentifier t, makeTagList t p)))
-
-
-makeTagList :: String -> [Page String] -> Compiler () (Page String)
-makeTagList tag posts = do
-  constA posts
-    >>> pageListCompiler recentFirst "_layouts/postitem.html"
-    >>> arr (copyBodyToField "posts" . fromBody)
-    >>> arr (setField "title" tag)
-    >>> applyTemplateCompiler "_layouts/tag.html"
-    >>> applyTemplateCompiler "_layouts/base.html"
-
-renderTagList' :: Compiler (Tags String) String
-renderTagList' = renderTagCloud tagIdentifier 50 100
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
