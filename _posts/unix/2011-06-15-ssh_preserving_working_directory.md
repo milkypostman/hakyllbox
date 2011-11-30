@@ -3,6 +3,7 @@ title: SSH Preserving Working Directory
 create: 2011-06-15 16:59
 modified: 2011-06-15 16:59
 posted: 2011-06-15 16:59
+tags: linux, ssh, bash
 ---
 
 if you want to ssh somewhere and preserve the directory here is a

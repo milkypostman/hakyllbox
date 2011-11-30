@@ -3,6 +3,7 @@ title: Brace Completion in Snow Leopard (upgrading bash)
 posted: 2011-01-22 10:38:32
 modified: 2011-01-22 11:11:06
 created: 2011-02-02 17:49:46
+tags: mac os x, bash, snow leopard
 ---
 
 I've been working with a lot of files lately and they all are

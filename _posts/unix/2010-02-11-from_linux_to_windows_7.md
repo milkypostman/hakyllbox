@@ -3,6 +3,7 @@ title: From Linux to Windows 7
 posted: 2010-02-11 12:06:23
 modified: 2011-02-02 17:32:30
 created: 2011-02-02 17:49:46
+tags: linux windows
 ---
 __I've done it maybe...__
 
