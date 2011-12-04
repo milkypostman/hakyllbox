@@ -36,6 +36,9 @@ main = hakyll $ do
 
   match "_layouts/*" $ compile templateCompiler
 
+  match "projects.md" $ do
+    compile $ pageCompiler
+
   match "_posts/*.md" $ do
     route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
@@ -49,8 +52,8 @@ main = hakyll $ do
   match "index.html" $ route idRoute
   create "index.html" $ constA mempty
     >>> arr (setField "title" "net")
-    >>> setFieldPageList (filter $ hasTag "linux") "_layouts/postlink.html" "linux" "_posts/*.md"
     >>> setFieldPageList recentFirst "_layouts/postlink.html" "posts" "_posts/*.md"
+    >>> setFieldPage "projects" "projects.md"
     >>> applyTemplateCompiler "_layouts/index.html"
     >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
@@ -60,21 +63,6 @@ main = hakyll $ do
     >>> arr (map $ copyField "content" "description")
     >>> renderRss feedConfiguration
 
-  -- Tags
-  create "tags" $
-    requireAll "_posts/*.md" (\_ ps -> readTags ps :: Tags String)
-
-  match "tags/*" $ route $ setExtension ".html"
-  metaCompile $ require_ "tags"
-    >>> arr tagsMap
-    >>> arr (map (\(t, p) -> (tagIdentifier t, makeTagList t p)))
-
-getTags :: Page a -> [String]
-getTags = map trim . splitAll "," . getField "tags"
-
-hasTag :: String -> Page a -> Bool
-hasTag s p = elem s $ getTags p
-
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
     { feedTitle       = "milkbox.net"
@@ -82,25 +70,6 @@ feedConfiguration = FeedConfiguration
     , feedAuthorName  = "milkypostman"
     , feedRoot        = "http://milkbox.net"
     }
-
-makeTagList :: String
-            -> [Page String]
-            -> Compiler () (Page String)
-makeTagList tag posts =
-    constA posts
-        >>> pageListCompiler recentFirst "_layouts/postlink.html"
-        >>> arr (copyBodyToField "posts" . fromBody)
-        >>> arr (setField "title" ("posts tagged " ++ tag))
-        >>> applyTemplateCompiler "_layouts/tag.html"
-        >>> applyTemplateCompiler "_layouts/base.html"
-
-
-renderTagList' :: Compiler (Tags String) String
-renderTagList' = renderTagList tagIdentifier
-
-tagIdentifier :: String -> Identifier (Page String)
-tagIdentifier "linux" =  fromCapture "tags/*" "linux"
-tagIdentifier _ =  fromCapture "tags/*" ""
 
 setRoot :: Routes
 setRoot = customRoute stripTopDir

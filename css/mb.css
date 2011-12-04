@@ -32,7 +32,7 @@ a {
     color: #EC4832;
 }
 
-ul, ol {
+ul, ol, dl {
     padding: 0;
     margin: 0;
     margin-top: 1em;
@@ -50,7 +50,7 @@ ol {
 
 p {
     line-height: 1.5em;
-    margin-bottom: 1.2em;
+    margin: 0 0 1.2em 0;
 }
 
 .clear {
@@ -106,7 +106,7 @@ hr {
 }
 
 #header a {
-    
+
     color: #607830;
     text-decoration: none;
 }
@@ -131,7 +131,8 @@ hr {
 /* section listings on front page */
 
 .sections h1 {
-    margin: 0 0 .3em 0;
+    margin: 0 0 .5em 0;
+    font-variant: small-caps;
 }
 
 .sections a {
@@ -144,10 +145,19 @@ hr {
     text-decoration: underline;
 }
 
-.sections ul {
-    margin-bottom: 2em;
-    margin-top: 0;
+.sections ul, dl {
+    margin: 0 0 2em 0;
+
 }
+
+.sections li {
+    list-style-type: none;
+    margin: .2em 0 .2em 0;
+}
+
+.sections dd p {
+    font-size: 85%;
+    }
 
 
 
