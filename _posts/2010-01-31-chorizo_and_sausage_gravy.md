@@ -1,8 +1,7 @@
 ---
 title: Chorizo and Sausage Gravy
-posted: 2010-01-31 19:13:29
-modified: 2011-02-02 17:32:30
-created: 2011-02-02 17:49:46
+author: Donald Ephraim Curtis
+tags: recipe
 ---
 This may be the greatest biscuits and gravy gravy recipe ever. Screw it... I WILL MAKE THIS CLAIM!
 

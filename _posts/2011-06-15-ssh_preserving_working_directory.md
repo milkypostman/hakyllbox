@@ -1,8 +1,6 @@
 ---
 title: SSH Preserving Working Directory
-create: 2011-06-15 16:59
-modified: 2011-06-15 16:59
-posted: 2011-06-15 16:59
+author: Donald Ephraim Curtis
 tags: linux, ssh, bash
 ---
 

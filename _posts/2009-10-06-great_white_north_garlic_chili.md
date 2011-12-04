@@ -1,8 +1,7 @@
 ---
 title: Great White North Garlic Chili
-posted: 2009-10-06 16:44:09
-modified: 2011-02-02 17:32:30
-created: 2011-02-02 17:49:46
+author: Donald Ephraim Curtis
+tags: recipe
 ---
 Here is the first recipe I have made up on my own...
 <h1>GREAT WHITE NORTH GARLIC CHILI</h1>

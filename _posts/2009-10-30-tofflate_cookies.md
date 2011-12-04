@@ -1,8 +1,7 @@
 ---
 title: Tofflate Cookies
-posted: 2009-10-30 23:14:03
-modified: 2011-02-02 17:32:30
-created: 2011-02-02 17:49:46
+author: Donald Ephraim Curtis
+tags: recipe
 ---
 If it helps the name at all, give it a french accent.
 

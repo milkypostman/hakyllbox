@@ -1,8 +1,7 @@
 ---
 title: Chunky Corn Chowder
-posted: 2009-10-05 20:15:00
-modified: 2011-02-02 17:32:30
-created: 2011-02-02 17:49:46
+author: Donald Ephraim Curtis
+tags: recipe
 ---
 I am in the midst of making my first recipe...
 

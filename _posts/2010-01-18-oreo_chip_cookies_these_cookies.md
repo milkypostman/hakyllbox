@@ -1,8 +1,7 @@
 ---
 title: Oreo Chip Cookies
-posted: 2010-01-18 00:10:42
-modified: 2011-02-02 17:32:30
-created: 2011-02-02 17:49:46
+author: Donald Ephraim Curtis
+tags: recipe
 ---
 I was hesitant to post this amazing recipe for cookies but I guess I'm
 never going to be able to sell it or get any money for it. So here

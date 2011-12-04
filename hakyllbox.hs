@@ -36,9 +36,7 @@ main = hakyll $ do
 
   match "_layouts/*" $ compile templateCompiler
 
-  match (predicate (\i -> matches "_posts/*/*.md" i
-                          -- && not (matches "_posts/drafts/*" i)
-                   )) $ do
+  match "_posts/*.md" $ do
     route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
       >>> arr (copyBodyToField "content")
@@ -51,18 +49,31 @@ main = hakyll $ do
   match "index.html" $ route idRoute
   create "index.html" $ constA mempty
     >>> arr (setField "title" "net")
-    >>> setFieldPageList (recentFirst) "_layouts/postitem.html" "recipes" "_posts/recipes/*.md"
-    >>> setFieldPageList (recentFirst) "_layouts/postitem.html" "unix" "_posts/unix/*.md"
-    >>> setFieldPageList (recentFirst) "_layouts/postitem.html" "academics" "_posts/academics/*.md"
+    >>> setFieldPageList (filter $ hasTag "linux") "_layouts/postlink.html" "linux" "_posts/*.md"
+    >>> setFieldPageList recentFirst "_layouts/postlink.html" "posts" "_posts/*.md"
     >>> applyTemplateCompiler "_layouts/index.html"
     >>> applyTemplateCompiler "_layouts/base.html"
     >>> relativizeUrlsCompiler
 
   match "feed/index.html" $ route idRoute
-  create "feed/index.html" $ requireAll_ "_posts/*/*.md"
+  create "feed/index.html" $ requireAll_ "_posts/*.md"
     >>> arr (map $ copyField "content" "description")
     >>> renderRss feedConfiguration
 
+  -- Tags
+  create "tags" $
+    requireAll "_posts/*.md" (\_ ps -> readTags ps :: Tags String)
+
+  match "tags/*" $ route $ setExtension ".html"
+  metaCompile $ require_ "tags"
+    >>> arr tagsMap
+    >>> arr (map (\(t, p) -> (tagIdentifier t, makeTagList t p)))
+
+getTags :: Page a -> [String]
+getTags = map trim . splitAll "," . getField "tags"
+
+hasTag :: String -> Page a -> Bool
+hasTag s p = elem s $ getTags p
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -72,8 +83,24 @@ feedConfiguration = FeedConfiguration
     , feedRoot        = "http://milkbox.net"
     }
 
+makeTagList :: String
+            -> [Page String]
+            -> Compiler () (Page String)
+makeTagList tag posts =
+    constA posts
+        >>> pageListCompiler recentFirst "_layouts/postlink.html"
+        >>> arr (copyBodyToField "posts" . fromBody)
+        >>> arr (setField "title" ("posts tagged " ++ tag))
+        >>> applyTemplateCompiler "_layouts/tag.html"
+        >>> applyTemplateCompiler "_layouts/base.html"
+
+
+renderTagList' :: Compiler (Tags String) String
+renderTagList' = renderTagList tagIdentifier
+
 tagIdentifier :: String -> Identifier (Page String)
-tagIdentifier = fromCapture "tags/*"
+tagIdentifier "linux" =  fromCapture "tags/*" "linux"
+tagIdentifier _ =  fromCapture "tags/*" ""
 
 setRoot :: Routes
 setRoot = customRoute stripTopDir
