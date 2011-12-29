@@ -1,11 +1,12 @@
 ---
-title:
+title: blash
 created: 2011-05-28 16:45
 ---
 
 in this world of social networks where we are so connected and feel
 like we're part of a community, it seems we're even more self-centered
 than ever.
+
 
 i am sure most everyon has had experiences where something online has
 come back to haunt them in real life.  normally it's just that your

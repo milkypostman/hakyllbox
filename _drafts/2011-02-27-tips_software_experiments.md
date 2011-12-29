@@ -4,6 +4,7 @@ posted: 2011-02-27 14:08:45
 modified: 2011-02-27 15:16:01
 created: 2011-02-27 15:01:34
 ---
+
 The worst part of sitting down to write anything is feeling like there is so
 much good advice out there and there is no way you could possibly contribute
 something that hasn't been thought of and something valid.  Maybe more the

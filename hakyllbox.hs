@@ -39,6 +39,16 @@ main = hakyll $ do
   match "projects.md" $ do
     compile $ pageCompiler
 
+  match "_drafts/*.md" $ do
+    route $ cleanDate `composeRoutes` cleanURL
+    compile $ pageCompiler
+      >>> arr (copyBodyToField "content")
+      >>> arr (renderDateField "date" "%Y-%m-%d" "Date unknown")
+      >>> arr (changeField "url" $ dropFileName)
+      >>> applyTemplateCompiler "_layouts/post.html"
+      >>> applyTemplateCompiler "_layouts/base.html"
+      >>> relativizeUrlsCompiler
+
   match "_posts/*.md" $ do
     route $ setRoot `composeRoutes` cleanDate `composeRoutes` cleanURL
     compile $ pageCompiler
