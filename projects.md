@@ -21,7 +21,7 @@
 :   Open-source molecular editing software.
 
 
-[melpa]: https://github.com/milkypostman/melpa
+[melpa]: http://melpa.milkbox.net
 [LaTeX]: http://www.latex-project.org/
 [hl-sentence]: https://github.com/milkypostman/hl-sentence
 [fringemark]: https://github.com/milkypostman/fringemark
