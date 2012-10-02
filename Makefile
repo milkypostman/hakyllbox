@@ -6,7 +6,7 @@ preview: rebuild
 deploy: rebuild
 	find _site/ -type d -exec chmod go+x {} \;
 	chmod -R go+r _site
-	rsync -avz --delete _site/* stonesoup.milkbox.net:milkbox
+	rsync -avz --delete _site/* milkbox.net:milkbox
 
 rebuild: hakyllbox
 	./hakyllbox rebuild
