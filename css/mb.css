@@ -48,6 +48,10 @@ ol {
     list-style-type: decimal-leading-zero;
 }
 
+img {
+    max-width: 500px;
+}
+
 p {
     line-height: 1.5em;
     margin: 0 0 1.2em 0;
