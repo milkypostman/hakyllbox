@@ -1,5 +1,5 @@
 ---
-title: Gaussian Smoothed Plots with MatPlotLib
+title: Gaussian KDE Smoothed Histograms with MatPlotLib
 author: Donald Ephraim Curtis
 tags: python, data, matplotlib, pandas, smooth
 ---
