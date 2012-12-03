@@ -1,3 +1,4 @@
+.DS_Store
 bak
 /_cache
 /_site
@@ -5,3 +6,4 @@ bak
 hakyllbox
 hakyllbox.hi
 hakyllbox.o
+/stuff
