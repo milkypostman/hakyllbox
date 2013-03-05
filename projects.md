@@ -10,6 +10,9 @@
 :   Highlights the current sentence in [Emacs].  Helps when writing
     [LaTeX] documents.
 
+[powerline]
+:   Port of [vim-powerline] to [Emacs]. Makes the modeline fancy.
+
 [fringemark]
 :   Extension for [Emacs] that shows the current mark in the fringe.
 
@@ -23,6 +26,8 @@
 
 [melpa]: http://melpa.milkbox.net
 [LaTeX]: http://www.latex-project.org/
+[powerline]: https://github.com/milkypostman/powerline
+[vim-powerline]: https://github.com/Lokaltog/vim-powerline
 [hl-sentence]: https://github.com/milkypostman/hl-sentence
 [fringemark]: https://github.com/milkypostman/fringemark
 [markdown-mode+]: https://github.com/milkypostman/markdown-mode-plus
