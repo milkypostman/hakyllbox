@@ -1,6 +1,10 @@
 [melpa]
 :   Elisp for generating development [Emacs] packages for package.el.
 
+[mulchn]
+:   Micro-survey site that leverages your [Twitter] network.
+
+
 [markdown-mode+]
 :   Extensions to [markdown-mode] for [Emacs] which exploits added
     features from [Pandoc] and has some nice features for Mac OS X
@@ -26,6 +30,8 @@
 
 [melpa]: http://melpa.milkbox.net
 [LaTeX]: http://www.latex-project.org/
+[mulchn]: http://mulchn.com/
+[Twitter]: http://twitter.com
 [powerline]: https://github.com/milkypostman/powerline
 [vim-powerline]: https://github.com/Lokaltog/vim-powerline
 [hl-sentence]: https://github.com/milkypostman/hl-sentence
