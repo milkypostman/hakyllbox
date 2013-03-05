@@ -22,8 +22,7 @@ import Text.Regex.PCRE ((=~~), (=~))
 import Hakyll
 
 main :: IO ()
--- main = hakyllWith config $ do
-main = hakyll $ do
+main = hakyllWith config $ do
   match "css/*" $ do
     route $ setExtension "css"
     compile compressCssCompiler
@@ -115,7 +114,7 @@ removeDatePrefix ident = replaceFileName file (drop 11 $ takeFileName file)
   where file = toFilePath ident
 
 
--- config :: HakyllConfiguration
--- config = defaultHakyllConfiguration
---     { deployCommand = "find _site/ -type d -exec chmod go+x {} \\;; chmod -R go+r _site; rsync -avz --delete _site/* milkbox.net:milkbox"
---     }
+config :: Configuration
+config = defaultConfiguration
+    { deployCommand = "find _site/ -type d -exec chmod go+x {} \\;; chmod -R go+r _site; rsync -avz --delete _site/* milkbox.net:milkbox"
+    }
