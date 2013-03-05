@@ -1,7 +1,7 @@
-[melpa]
+[melpa] \[[source][melpa-source]\]
 :   Elisp for generating development [Emacs] packages for package.el.
 
-[mulchn]
+[mulchn] \[[source][mulchn-source]\]
 :   Micro-survey site that leverages your [Twitter] network.
 
 
@@ -29,8 +29,10 @@
 
 
 [melpa]: http://melpa.milkbox.net
+[melpa-source]: http://github.com/milkypostman/melpa
 [LaTeX]: http://www.latex-project.org/
 [mulchn]: http://mulchn.com/
+[mulchn-source]: http://github.com/milkypostman/mulchn
 [Twitter]: http://twitter.com
 [powerline]: https://github.com/milkypostman/powerline
 [vim-powerline]: https://github.com/Lokaltog/vim-powerline
